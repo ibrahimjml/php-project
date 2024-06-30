@@ -1,4 +1,4 @@
-ocial Media Web Application
+Social Media Web Application
 This project is a PHP-based social media web application designed to provide users with a platform for sharing posts, following other users, and managing profiles securely.
 
 Features
