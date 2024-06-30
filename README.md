@@ -26,8 +26,7 @@ Configure database credentials in db-connection.php.
 Start your local server.
 
 Usage
-.
-
+create table in DB example-php then navigate to example-php.sql then import it as sql  .
 Register as a new user or log in with existing credentials.
 
 Explore the various features such as creating posts, interacting with posts, and managing your profile.
