@@ -44,7 +44,7 @@ if(!isset($_SESSION['islogged']) || !$_SESSION['islogged'] ){
   }
   
   ?>
-  <!-- <button class="btn"><a href="home.php">Go Home</a></button> -->
+   <button class="btn"><a href="home.php">Go Home</a></button> 
   <script>
     const input = document.getElementById('select_post_img');
     input.addEventListener("change",preview);
