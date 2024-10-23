@@ -36,6 +36,7 @@ if($result->num_rows > 0){
 <body>
   <h1>This Page Only for Admins</h1>
   <h2>All Users</h2>
+
   
   <table >
     <thead>

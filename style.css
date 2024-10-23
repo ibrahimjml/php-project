@@ -425,4 +425,5 @@ form.searchbar::after {
   content: "";
   clear: both;
   display: table;
+
 }
