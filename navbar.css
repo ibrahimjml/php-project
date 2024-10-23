@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+:root{
+  --body:rgba(165, 42, 42, 0.678);
+  --primary: #000;
+  --secondary: rgb(24 24 27);
+  --border: rgba(63, 63, 70, 0.4);
+  --border2:rgba(40, 40, 48, 0.91);
+  --title: rgb(244 244 245);
+  --subtitle: rgb(161 161 170);
+}
+
+nav {
+
+  width: 100%;
+
+  background-color: var(--title);
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+nav ul {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+nav li {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+nav a {
+  height: 100%;
+  padding: 0 30px;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  color: var(--subtitle);
+}
+nav a:hover{
+  color: var(--primary);
+  scale: 1.1;
+}
+nav .frst {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  margin-left: 15px;
+  font-size: large;
+  font-weight: bold;
+}
+.menu-button {
+  display: none;
+}
+/* making body a little  transeparent  */
+.border {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--border2);
+  z-index: 11;
+}
+/*collapseable nav window*/
+.border .modal {
+  animation: animate 0.7s 1;
+  width: 85%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 55px;
+  height: fit-content;
+  background-color: var(--secondary);
+  padding: 10px 24px 10px 10px;
+  border-radius: 10px;
+  z-index: 5;
+}
+.modal .sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+}
+.modal .sidebar li {
+  border-bottom: 1px solid var(--border2);
+  width: 100%;
+  font-size: large;
+}
+.modal .sidebar li a {
+  transition: 0.2s;
+  color: var(--subtitle);
+}
+/*animation*/
+@keyframes animate {
+  0% {
+    scale: 0;
+  }
+  50% {
+    scale: 1.4;
+  }
+  100% {
+    scale: 1;
+  }
+}
+.modal .sidebar li a:hover {
+  color: var(--title);
+  transform: scale(1);
+}
+/*removing border from first child and last child*/
+.modal .sidebar li:last-child {
+  border: none;
+}
+.modal .sidebar li:first-child {
+  width: fit-content;
+  margin-left: auto;
+  border: none;
+  cursor: pointer;
+}
+.border {
+  display: none;
+}
+/* remove background/border button svg*/
+
+.menu-button a:active {
+  scale: 0.5;
+}
+.bor  svg{
+  fill: var(--title);
+  
+}
+.bor  svg:hover {
+  scale: 1.4;
+}
+
+.bor svg:active {
+  scale: 0.9;
+}
+/* mobile screen */
+@media screen and (max-width: 500px) {
+  .hideOnMobile {
+    display: none;
+  }
+  .menu-button {
+    display: block;
+  }
+}
