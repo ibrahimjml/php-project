@@ -21,9 +21,8 @@ if($_POST['csrf_token'] !== $_SESSION['csrf-token']){
 }
 
 $user_id =$_SESSION['ID'];
-if($_POST['user_id'] != $user_id){
-  echo "unauthorized action";
-  exit();
+if($_POST['user_id'] !== $user_id){
+  die('unauthorized action');
 }
 
 if(!isset($_POST['email'])|| empty(trim($_POST['email']))){
@@ -37,13 +36,15 @@ if(!isset($_FILES['picture']) || empty($_FILES['picture']['name'])){
 
 $username=validate($_POST['username']);
 $email=validate($_POST['email']);
-$imageextension = strtolower(pathinfo($_FILES['picture']['name'],PATHINFO_EXTENSION));
-$imageposter = "images/default-pic/".$_SESSION['ID']."-".bin2hex(random_bytes(14)).".".$imageextension;
 
 if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
   $valid=false;
   $errors[]="please valid an email";
 }
+
+
+
+
 if(!isset($_FILES['picture']) || empty($_FILES['picture']['name'])){
   $changingimage=false;
 }
@@ -73,17 +74,25 @@ if(!isset($_FILES['picture']) || empty($_FILES['picture']['name'])){
           }
         }
     
-        sessionStore("errors",$errors);
-        header("location:../editprofile.php");
+        if (!empty($errors)) {
+          sessionStore("errors", $errors);
+          header("location:../editprofile.php");
+          exit();
+      }
 
 
 
 if($changingimage){
 
-  $checkimage = getimagesize($_FILES['picture']['tmp_name']);
+$imageextension = strtolower(pathinfo($_FILES['picture']['name'],PATHINFO_EXTENSION));
+$imageposter = "images/default-pic/".$_SESSION['ID']."-".bin2hex(random_bytes(14)).".".$imageextension;
+
+$checkimage = getimagesize($_FILES['picture']['tmp_name']);
+
   if(!$checkimage){
     $valid=false;
-    header("location:../editprofile.php?err");
+    header("location:../editprofile.php?err=1");
+    exit();
   }
   while(file_exists($imageposter)){
     $imageposter = "images/default-pic/".$_SESSION['ID']."-".bin2hex(random_bytes(6)).".".$imageextension;
@@ -91,12 +100,14 @@ if($changingimage){
   
   if($_FILES['picture']['size'] > 500000){
     $valid=false;
-    header("location:../editprofile.php?err");
+    header("location:../editprofile.php?err=2");
+    exit();
   }
-  if($imageextension != "jpeg" && $imageextension != "png" && $imageextension != "jpg"){
-    $valid=false;
-    header("location:../editprofile.php?err");
-  }
+  if (!in_array($imageextension, ["jpeg", "png", "jpg"])) {
+    $valid = false;
+    header("location:../editprofile.php?err=3");
+    exit();
+}
 
   if(empty($errors)){
     if($valid){
@@ -107,7 +118,7 @@ if($changingimage){
         move_uploaded_file($_FILES['picture']['tmp_name'],"../".$imageposter);
         $_SESSION['pic']=$imageposter;
         header("Location:../editprofile.php");
-        
+        exit();
         }else{
           echo "ooops! error";
         }
@@ -126,7 +137,7 @@ if($changingimage){
       if(mysqli_stmt_execute($stmt)){
         $_SESSION['pic']=$imageposter;
         header("Location:../editprofile.php");
-        
+        exit();
         }else{
           echo "ooops! error";
         }
