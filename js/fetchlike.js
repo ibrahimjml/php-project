@@ -7,7 +7,7 @@ function Like(postId) {
                   post_id: postId
               })
             };
-           fetch('apis/likepostaction.php', Options) 
+           fetch('actions/likepostaction.php', Options) 
             
           
           

@@ -5,7 +5,7 @@ session_start();
     $errors =[];
     $email=$password="";
     require_once '../db-connection.php';
-    require_once '../validation.php';
+    require_once '../functions/validation.php' ;
 
 
 

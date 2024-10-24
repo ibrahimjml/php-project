@@ -2,7 +2,7 @@
 session_start();
 ini_set("display_errors",1);
 
-require 'validation.php';
+require 'functions/validation.php';
 require_once 'db-connection.php';
 
 if(!isset($_SESSION['islogged']) || !$_SESSION['islogged'] ){

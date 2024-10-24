@@ -10,7 +10,7 @@
   })
       };
 
-      fetch('apis/followaction.php', Options) 
+      fetch('actions/followaction.php', Options) 
         
       .then((response) => response.json())
       .then((data)=>followDone(data,userId))
