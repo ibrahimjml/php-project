@@ -29,7 +29,7 @@ $username=$email=$password="";
     
     if(!preg_match($re,$password)){
       $valid=false;
-      $errors[]="your password should be strong";
+      $errors[]="password must be 8 characters with 1 upper case letter and 1 number and 1 sympol";
     }
   
 
