@@ -12,8 +12,13 @@
 - `POST /apis/login.php` - login to get token access.
 - `POST /apis/logout.php` - logout delete token, token required.
 
- `posts`
+ `Posts`
+
+- `GET  /apis/getallposts.php` - Retrieve all posts , no authentication required.
+- `GET  /apis/getpost.php` - get single post , no authentication required.
 - `POST /apis/createpost.php` - Create new post , token required.
+- `POST /apis/updatepost.php` - Update authorized post , token required.
+- `DELETE /apis/destroypost.php` - Delete authorized post , token required.
 
 ### Features
 
