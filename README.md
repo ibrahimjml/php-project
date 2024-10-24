@@ -7,6 +7,7 @@
 
 ## PHP RESTful API for this project 
 -make sure to put in headers Content-Type:application/json & Authorization.
+
 `Login`
 - `POST /apis/login.php` - login to get token access.
 - `POST /apis/logout.php` - logout delete token, token required.
