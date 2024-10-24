@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include_once 'validation.php';
+include_once 'functions/validation.php';
 
 if(isset($_SESSION['islogged'])){
   header("location: home.php");

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 23, 2024 at 04:36 PM
+-- Generation Time: Oct 24, 2024 at 07:20 PM
 -- Server version: 8.0.36
 -- PHP Version: 8.3.7
 
@@ -33,18 +33,6 @@ CREATE TABLE `follows` (
   `followed_id` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `follows`
---
-
-INSERT INTO `follows` (`follow_id`, `follower_id`, `followed_id`) VALUES
-(42, 45, 46),
-(54, 46, 45),
-(56, 47, 45),
-(57, 46, 47),
-(58, 47, 46),
-(60, 48, 47);
-
 -- --------------------------------------------------------
 
 --
@@ -56,20 +44,6 @@ CREATE TABLE `likes` (
   `post_id` int UNSIGNED NOT NULL,
   `user_id` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `likes`
---
-
-INSERT INTO `likes` (`like_id`, `post_id`, `user_id`) VALUES
-(150, 102, 46),
-(152, 103, 46),
-(153, 103, 47),
-(154, 102, 47),
-(155, 104, 46),
-(156, 105, 47),
-(157, 104, 48),
-(158, 105, 48);
 
 -- --------------------------------------------------------
 
@@ -84,17 +58,6 @@ CREATE TABLE `posts` (
   `user_id` int UNSIGNED NOT NULL,
   `date_posted` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`post_id`, `post_text`, `post_image`, `user_id`, `date_posted`) VALUES
-(102, 'hello iam new', 'uploads/45-d01b78634c2a.png', 45, '2024-06-27 22:08:39'),
-(103, 'iam learning laravel I finished my first project :)', 'uploads/45-25aefa3c6367.jpg', 45, '2024-06-28 12:43:39'),
-(104, 'hello friends ', 'uploads/47-461ad1215712.jpg', 47, '2024-10-23 13:14:03'),
-(105, 'hello ', 'uploads/46-5761ccca2e34.jpg', 46, '2024-10-23 14:07:16'),
-(108, 'fsdfdsf', 'uploads/47-f26506aa32c6.jpg', 47, '2024-10-23 14:59:22');
 
 -- --------------------------------------------------------
 
@@ -112,15 +75,17 @@ CREATE TABLE `users` (
   `default_pic` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `users`
+-- Table structure for table `user_token`
 --
 
-INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_password`, `user_salt`, `is_admin`, `default_pic`) VALUES
-(45, 'polizanye', 'polizanye@yahoo.com', '46cd5a7f7c12f2febf929b1a4cf5fb55d65768bec997698e0d0757ab084a8c2e', '92a6082a4389', 0, 'images/default-pic/45-db4f1d6c810804350704d2ada2ab.png'),
-(46, 'polizanye123', 'polizanye123@yahoo.com', 'b4f31948f37029fa5be9db8473b50f323b3661d4066bbd96cdabcef101bf1e51', '5b9fd79d41bb', 0, 'images/default-pic/46-ab315d17d871269f3a3163ef47b2.jpg'),
-(47, 'jamal123', 'jgrjml@outlook.com', '151f3e08b59bd943333fb0c5b1a41b149f94caf6738de5cd74b5917ce5dd7382', '958464c4975c', 0, 'images/default-pic/47-51dd0a3c3980f84d94e4ff8e903a.jpg'),
-(48, 'jag123', 'maha@hawamail.com', 'dbbd257e13da3b2000036f112d0b7bc8ce2d3fc2898562e477b12459c21697b1', 'f721124c63ce', 0, 'default_img.jpg');
+CREATE TABLE `user_token` (
+  `user_id` int UNSIGNED NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expires_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
@@ -157,6 +122,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `user_email` (`user_email`);
 
 --
+-- Indexes for table `user_token`
+--
+ALTER TABLE `user_token`
+  ADD UNIQUE KEY `user_id` (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -164,25 +135,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `follow_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `follow_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `like_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `like_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `post_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -207,6 +178,12 @@ ALTER TABLE `likes`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_token`
+--
+ALTER TABLE `user_token`
+  ADD CONSTRAINT `user_token_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
