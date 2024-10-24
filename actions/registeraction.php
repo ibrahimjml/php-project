@@ -26,9 +26,7 @@ $username=$email=$password="";
         $valid=false;
         $errors[]="please fill inputs";
       
-      }else{
-        $valid=true;
-      }
+    
     if(!preg_match($re,$password)){
       $valid=false;
       $errors[]="your password should be strong";
