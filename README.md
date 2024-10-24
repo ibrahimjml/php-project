@@ -4,6 +4,16 @@
 ![schooldash-dahboard-page](https://i.postimg.cc/nhjczJ1q/Screenshot-2024-10-23-150732.png)
 
 
+
+## PHP RESTful API for this project 
+-make sure to put in headers Content-Type:application/json & Authorization.
+`Login`
+- `POST /apis/login.php` - login to get token access.
+- `POST /apis/logout.php` - logout delete token, token required.
+
+ `posts`
+- `POST /apis/createpost.php` - Create new post , token required.
+
 ### Features
 
 #### User Authentication/Authorization and profile Management
