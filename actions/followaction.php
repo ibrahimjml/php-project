@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $followed_id = $_POST['followed_id'];
 
-    // Check if the user is trying to follow himself
+    
     if ($follower_id == $followed_id) {
         echo json_encode(['error' => "You can't follow yourself"]);
         exit();

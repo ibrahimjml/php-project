@@ -15,7 +15,7 @@ $username=$email=$password="";
       $email = validate($_POST['email']);
       $password = validate($_POST['pass']);
 
-      $re ="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/";
+      $regpassword ="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/";
       
       if(strlen($username) <6 || strlen($username) > 15){
         $valid=false;
@@ -26,7 +26,9 @@ $username=$email=$password="";
         $valid=false;
         $errors[]="please fill inputs";
       
-    
+      }else{
+        $valid=true;
+      }
     if(!preg_match($re,$password)){
       $valid=false;
       $errors[]="password must be 8 characters with 1 upper case letter and 1 number and 1 sympol";
@@ -44,51 +46,49 @@ $username=$email=$password="";
      mysqli_stmt_execute($stmt);
        mysqli_stmt_store_result($stmt);
        if(mysqli_stmt_num_rows($stmt) == 1){
+        $valid=false;
          $errors[]="This username Is taken";
-       }else{
-         $username=trim($_POST['username']);
        }
     
     }
      
        //validation email 
-    
-  
-
     $uu="SELECT user_email FROM users WHERE user_email = ?";
     if($stmt = mysqli_prepare($conn,$uu)){
      mysqli_stmt_bind_param($stmt,"s",$email);
      mysqli_stmt_execute($stmt);
        mysqli_stmt_store_result($stmt);
        if(mysqli_stmt_num_rows($stmt) == 1){
+        $valid=false;
          $errors[]="This email Is taken";
-       }else{
-         $email=trim($_POST['email']);
        }
      }
-    
-     $user_def = "default_img.jpg";
-
-        $salt = bin2hex(random_bytes(6));
-        
-        $saltedPassword = $password . $salt;
-        $hashedPassword = hash("sha256", $saltedPassword);
-if($valid == true && empty($errors)){
- 
   
+     if(!empty($errors)){
+      sessionStore("errors",$errors);
+     header("location:../register.php");
+     exit();
+     }
+$user_def = "default_img.jpg";
+$salt = bin2hex(random_bytes(6));      
+$saltedPassword = $password . $salt;
+$hashedPassword = hash("sha256", $saltedPassword);
 
-  $sql = "INSERT INTO users (user_name, user_email, user_password, user_salt,default_pic) VALUES (?, ?, ?, ?,?)";
-        if($stmt = mysqli_prepare($conn, $sql)){
-            if(mysqli_stmt_bind_param($stmt, "sssss", $username, $email, $hashedPassword, $salt,$user_def)){
-                if(mysqli_stmt_execute($stmt)){
+if($valid){
+ 
+$sql = "INSERT INTO users (user_name, user_email, user_password, user_salt,default_pic) VALUES (?, ?, ?, ?,?)";
+  if($stmt = mysqli_prepare($conn, $sql)){
+      if(mysqli_stmt_bind_param($stmt, "sssss", $username, $email, $hashedPassword, $salt,$user_def)){
+            if(mysqli_stmt_execute($stmt)){
 
                    $successed[]="successfuly registerd";
-                   sessionStore("successed",$successed);
-                   header("location:../home.php");
+                   if($successed){
+                     sessionStore("successed",$successed);
+                     header("location:../home.php");
+                     exit();
+                   }
                   
                   $_SESSION['islogged'] = true;
-                
-                  
                   $_SESSION['ID'] = mysqli_insert_id($conn);
                 
                 
@@ -103,10 +103,6 @@ if($valid == true && empty($errors)){
             die("Error preparing statement: " . mysqli_error($conn));
         }
 
-}else{
-  sessionStore("errors",$errors);
-     header("location:../register.php");
-     
 }
 
 }else{

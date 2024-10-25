@@ -117,16 +117,15 @@ $query = "SELECT * FROM follows WHERE follower_id = ? AND followed_id = ?";
   <!-- card bootstrap -->
   
   <div style='display:flex;flex-wrap:wrap;justify-content:center;gap:25px;'>
-  <?php
-foreach($posts as $post){ ?>
-
+  <?php foreach($posts as $post){ ?>
+   <?php if($post == null) {?>
+    <h2>No Posts Yet</h2>
+    <?php }?>
   <div class="card-profile"  style="width: 15rem; border:none;">
-
-  
-
-  
   <?php if($post['post_image']){?>
   <img class="card-img-top" src="<?php echo $post['post_image']; ?>" width="300px" height="200px">
+  <?php } else {?>
+    <p><?php echo $post['post_text']?></p>
   <?php }?>
 
   <div class="card-body"  >

@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include_once 'validation.php';
+include_once 'functions/validation.php';
 if(!isset($_SESSION['islogged']) || !$_SESSION['islogged'] ){
   die("Access Denied");
 }
@@ -22,9 +22,9 @@ if(!isset($_SESSION['islogged']) || !$_SESSION['islogged'] ){
         <?php endforeach ?>
         <?php removeSession("errors"); ?>
     <form action="actions/createpostaction.php" method="POST" enctype="multipart/form-data">
-      <textarea name="txtarea" class="txt" rows="5" ></textarea><br>
+      <textarea name="content" class="txt" rows="5" ></textarea><br>
       <img src="" id="post_img"   width="200px">
-      <input type="file" class="file" name="select_post_img" id="select_post_img">
+      <input type="file" class="file" name="image" id="select_post_img">
         <input type="submit" style="width:15%;margin:5px auto;" value="post">
     
     </form>

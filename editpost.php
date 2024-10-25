@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require_once 'db-connection.php';
-include_once 'validation.php';
+include_once 'functions/validation.php';
 if(!isset($_SESSION['islogged']) || !$_SESSION['islogged'] ){
   die("Access Denied");
 }
