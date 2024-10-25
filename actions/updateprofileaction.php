@@ -21,7 +21,7 @@ if($_POST['csrf_token'] !== $_SESSION['csrf-token']){
 }
 
 $user_id =$_SESSION['ID'];
-if($_POST['user_id'] !== $user_id){
+if($_POST['user_id'] != $user_id){
   die('unauthorized action');
 }
 
