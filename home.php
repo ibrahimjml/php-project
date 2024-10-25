@@ -94,16 +94,13 @@ foreach ($users as $user) {
   <?php echo "<div class='post'>"."<span>".$post['user_name']."</span>" ."<br>". date('d-m-y',$timestamp) ."</div>";?>
 
   <?php if( $post['user_id'] != $_SESSION['ID']):?>
-<?php if($follow_status[$post['user_id']]):?>
-  <button class="btn-primary" style="width:100px;height:40px;margin-left:auto;" id="follow-button-<?php echo $post['user_id']; ?>" onclick="Follow(<?php echo $post['user_id']; ?>)">
-  Unfollow
-  </button>
-<?php else:?>
-  <button class="btn-primary" style="width:100px;height:40px;margin-left:auto;" id="follow-button-<?php echo $post['user_id']; ?>" onclick="Follow(<?php echo $post['user_id']; ?>)">
-  Follow
-  </button>
+  <?php $button = $follow_status[$post['user_id']] ? 'Unfollow' : 'Follow'; ?>
+        <button class="btn-primary" style="width:100px;height:40px;margin-left:auto;"
+                id="follow-button-<?php echo $post['user_id']; ?>-<?php echo $post['post_id']; ?>"
+                onclick="Follow(<?php echo $post['user_id']; ?>)">
+            <?php echo $button; ?>
+        </button>
   <?php endif;?>
-            <?php endif;?>
 
   <?php echo "</div>";?>
   <?php if($post['post_image']):?>

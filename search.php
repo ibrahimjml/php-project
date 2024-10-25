@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'db-connection.php';
-require 'validation.php';
+require 'functions/validation.php';
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 

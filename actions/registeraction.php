@@ -15,29 +15,31 @@ $username=$email=$password="";
       $email = validate($_POST['email']);
       $password = validate($_POST['pass']);
 
-      $regpassword ="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/";
       
-      if(strlen($username) <6 || strlen($username) > 15){
-        $valid=false;
-        $errors[]=" minimum 6 characters";
-      }
-
+      
       if(empty(trim($username))||empty(trim($email))||empty(trim($password))){
         $valid=false;
         $errors[]="please fill inputs";
       
-      }else{
-        $valid=true;
       }
-    if(!preg_match($re,$password)){
+
+      if(strlen($username) <4 || strlen($username) > 15){
+        $valid=false;
+        $errors[]=" at least 4 characters.MAX 14";
+      
+      }
+      $regpassword ="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/";
+    if(!preg_match($regpassword,$password)){
       $valid=false;
       $errors[]="password must be 8 characters with 1 upper case letter and 1 number and 1 sympol";
+    
     }
   
 
     if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
       $valid=false;
       $errors[]="please valid an email";
+      
     }
       //validation username exist
       $u="SELECT user_name FROM users WHERE user_name = ?";
@@ -81,13 +83,9 @@ $sql = "INSERT INTO users (user_name, user_email, user_password, user_salt,defau
       if(mysqli_stmt_bind_param($stmt, "sssss", $username, $email, $hashedPassword, $salt,$user_def)){
             if(mysqli_stmt_execute($stmt)){
 
-                   $successed[]="successfuly registerd";
-                   if($successed){
-                     sessionStore("successed",$successed);
+                   $success[]="successfuly registerd";
+                     sessionStore("success",$success);
                      header("location:../home.php");
-                     exit();
-                   }
-                  
                   $_SESSION['islogged'] = true;
                   $_SESSION['ID'] = mysqli_insert_id($conn);
                 

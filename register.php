@@ -28,7 +28,7 @@ if(isset($_SESSION['islogged'])){
             <label for="username">Username</label>
             <input type="text" placeholder="Name" name="username" id="username" value="<?php if(isset($_SESSION['username'])) echo $_SESSION['username'];?>">
             <span class="icon-check-circle"></span>
-                  <p style="display:none;color:red;">at least 3 characters</p>
+                  <p style="display:none;color:red;">at least 4 characters. MAX 14</p>
     </div>
   
         
@@ -44,7 +44,7 @@ if(isset($_SESSION['islogged'])){
               <span class="icon-check-circle"></span>
               <p  style="display:none;color:red;">password must be 8 characters with 1 upper case letter and 1 number and 1 sympol</p>
             </div>
-          <input type="submit" value="Register">   
+          <input type="submit" value="Register" id="register">   
           <p class="ppp">allready registered ?<a href="login.php">login in</a></p>
       </form>
   </div>
@@ -78,7 +78,7 @@ const pass=document.getElementById("password");
       pass.classList.add("error3");
       pass.nextElementSibling.style.opacity="0";
     }
-    
+    register();
   }
   )
   
@@ -98,7 +98,7 @@ const pass=document.getElementById("password");
       divp2.style.display="block";
       email.nextElementSibling.style.opacity="0";
     }
-
+register();
   }
   );
   
@@ -106,7 +106,7 @@ const pass=document.getElementById("password");
     user.classList.add("error3");
     divp1.style.display="block";
   
-    if(user.value.length >= 6 && user.value.length <= 15 ){
+    if(user.value.length >= 4 && user.value.length < 15 ){
       user.classList.remove("error3");
       user.classList.add("success");
       divp1.style.display="none";
@@ -117,11 +117,20 @@ const pass=document.getElementById("password");
       divp1.style.display="block";
       user.nextElementSibling.style.opacity="0";
     }
-
+register();
   }
   );
   
-
+// remove "disabled" attribute when all input field success
+const regbtn = document.getElementById("register");
+regbtn.setAttribute("disabled","");
+const register = () => {
+  if(user.classList.contains("success") && email.classList.contains("success") && pass.classList.contains("success")){
+    regbtn.removeAttribute("disabled"); 
+  }else{
+     regbtn.setAttribute("disabled","")
+  }
+}
    
 
 </script>
