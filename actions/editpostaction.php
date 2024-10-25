@@ -12,7 +12,7 @@ error_reporting(E_ALL);
   }
 $errors=[];
 $valid = true;
-$postID = $_POST['postID'];
+$postID = $_POST['post_id'];
 $content = validate($_POST['txtarea']);
 
   if($_SERVER['REQUEST_METHOD']=="POST"){
@@ -28,6 +28,17 @@ if(!isset($content) || empty(trim($content))){
   $valid=false;
   $errors[]= "text is empty";
 }
+
+$sql_check = "SELECT post_id FROM posts WHERE user_id = ? AND post_id = ?";
+
+      $stmt_check = mysqli_prepare($conn, $sql_check);
+      mysqli_stmt_bind_param($stmt_check, "ii", $_SESSION['ID'], $post_id);
+      if(mysqli_stmt_execute($stmt_check)){
+          mysqli_stmt_store_result($stmt_check);
+          if(mysqli_stmt_num_rows($stmt_check) === 0){
+              die("you are not the poster");
+          }
+      }
 
 if(!empty($errors)){
 

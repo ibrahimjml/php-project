@@ -144,7 +144,6 @@ foreach ($users as $user) {
           
 </div>
 <?php endforeach;?>
-dfdsfdsf
 <?php else :?>
   <h1>NO POSTS YET </h1>
 <?php endif;?>
