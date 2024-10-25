@@ -47,7 +47,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         mysqli_stmt_bind_param($stmt_delete_like, "ii", $user_id, $post_id);
         mysqli_stmt_execute($stmt_delete_like);
 
-      
+        //  like count
+        $sql_like_count = "SELECT COUNT(*) as like_count FROM likes WHERE post_id = ?";
+        $stmt_like_count = mysqli_prepare($conn, $sql_like_count);
+        mysqli_stmt_bind_param($stmt_like_count, "i", $post_id);
+        mysqli_stmt_execute($stmt_like_count);
+        $result = mysqli_stmt_get_result($stmt_like_count);
+        $like_count = $result->fetch_assoc()['like_count'];
+
+        echo json_encode([
+            'liked' => false,
+            'like_count' => $like_count
+        ]);
     } else {
         // Like the post
         $sql_insert_like = "INSERT INTO likes (post_id, user_id) VALUES (?, ?)";

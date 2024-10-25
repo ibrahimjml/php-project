@@ -12,7 +12,7 @@ error_reporting(E_ALL);
   }
 $errors=[];
 $valid = true;
-$postID = $_POST['post_id'];
+$postID = $_POST['postID'];
 $content = validate($_POST['txtarea']);
 
   if($_SERVER['REQUEST_METHOD']=="POST"){
@@ -32,7 +32,7 @@ if(!isset($content) || empty(trim($content))){
 $sql_check = "SELECT post_id FROM posts WHERE user_id = ? AND post_id = ?";
 
       $stmt_check = mysqli_prepare($conn, $sql_check);
-      mysqli_stmt_bind_param($stmt_check, "ii", $_SESSION['ID'], $post_id);
+      mysqli_stmt_bind_param($stmt_check, "ii", $_SESSION['ID'], $postID);
       if(mysqli_stmt_execute($stmt_check)){
           mysqli_stmt_store_result($stmt_check);
           if(mysqli_stmt_num_rows($stmt_check) === 0){
@@ -54,9 +54,6 @@ $imageextension = strtolower(pathinfo($_FILES['picture']['name'],PATHINFO_EXTENS
 $imageposter = "uploads/".$_SESSION['ID']."-".bin2hex(random_bytes(6)).".".$imageextension;
 
 
-
-
-
 $checkimage = getimagesize($_FILES['picture']['tmp_name']);
 if(!$checkimage){
   $valid=false;
@@ -66,7 +63,7 @@ while(file_exists($imageposter)){
   $imageposter = "uploads/".$_SESSION['ID']."-".bin2hex(random_bytes(6)).".".$imageextension;
   }
 
-if($_FILES['picture']['size'] > 500000){
+if($_FILES['picture']['size'] > 5000000){
   $valid=false;
   header("location:../editpost.php?err=2");
    }
